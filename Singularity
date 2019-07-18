@@ -13,6 +13,8 @@ From: willgpaik/centos7_aci
 %post
     yum -y update
     
+    source /opt/rh/devtoolset-8/enable
+    
     export BOOST_ROOT=/usr/local
     
     mkdir -p /opt/sw/dssp
@@ -25,10 +27,10 @@ From: willgpaik/centos7_aci
     sed -i -e 's|# BOOST = $(HOME)/my-boost|BOOST = $(BOOST_ROOT)|g' makefile
     sed -i -e 's|BOOST_LIB_DIR       = $(BOOST:%=%/lib)|BOOST_LIB_DIR       = $(BOOST_ROOT)/lib|g' makefile
     sed -i -e 's|BOOST_INC_DIR       = $(BOOST:%=%/include)|BOOST_INC_DIR       = $(BOOST_ROOT)/include|g' makefile
-    make lib -j 2
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BOOST_ROOT/lib:/opt/sw/libzeep/lib
+    export CPATH=$CPATH:$BOOST_ROOT/include:/opt/sw/libzeep/include/zeep
     
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/sw/libzeep/lib
-    export CPATH=$CPATH:/opt/sw/libzeep/include/zeep
+    make lib -j 2
     
     cd /opt/sw
     
