@@ -27,7 +27,7 @@ From: willgpaik/centos7_aci
     sed -i -e 's|# BOOST = $(HOME)/my-boost|BOOST = $(BOOST_ROOT)|g' makefile
     sed -i -e 's|BOOST_LIB_DIR       = $(BOOST:%=%/lib)|BOOST_LIB_DIR       = $(BOOST_ROOT)/lib|g' makefile
     sed -i -e 's|BOOST_INC_DIR       = $(BOOST:%=%/include)|BOOST_INC_DIR       = $(BOOST_ROOT)/include|g' makefile
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BOOST_ROOT/lib:/opt/sw/libzeep/lib
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BOOST_ROOT/lib:/opt/sw/libzeep/lib:/lib:/lib64
     export CPATH=$CPATH:$BOOST_ROOT/include:/opt/sw/libzeep/include/zeep
     
     make lib -j 2
@@ -37,7 +37,10 @@ From: willgpaik/centos7_aci
     git clone https://github.com/cmbi/xssp.git
     cd xssp
     ./autogen.sh
-    ./configure --prefix=/opt/sw/dssp/ --with-boost=$BOOST_ROOT/ --with-boost-libdir=$BOOST_ROOT/lib CPPFLAGS="-I${BOOST_ROOT}/include -I${BUILD_DIR}/include" LDFLAGS="-L${BOOST_ROOT}/lib -L${BUILD_DIR}/lib" CFLAGS=-lrt CXXFLAGS=-lrt
+    ./configure --prefix=/opt/sw/dssp/ --with-boost=$BOOST_ROOT/ --with-boost-libdir=$BOOST_ROOT/lib \
+        CPPFLAGS="-I${BOOST_ROOT}/include -I${BUILD_DIR}/include -I/opt/sw/libzeep/include/zeep" \
+        LDFLAGS="-L${BOOST_ROOT}/lib -L${BUILD_DIR}/lib -L/opt/sw/libzeep/lib" \
+        CFLAGS=-lrt CXXFLAGS=-lrt
     make -j $NP && make install
     
     cd /opt/sw
