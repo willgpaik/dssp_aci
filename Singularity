@@ -35,6 +35,7 @@ From: willgpaik/centos7_aci
     
     cd /opt/sw
     
+    # Install dssp
     git clone https://github.com/cmbi/xssp.git
     cd xssp
     ./autogen.sh
@@ -44,7 +45,21 @@ From: willgpaik/centos7_aci
         CFLAGS=-lrt CXXFLAGS=-lrt
     make -j $NP && make install
     
+    # Install GROMACS
+    cd /opt/sw
+    wget http://ftp.gromacs.org/pub/gromacs/gromacs-2019.3.tar.gz
+    tar xfz gromacs-2019.3.tar.gz
+    cd gromacs-2019.3
+    mkdir build
+    cd build
+    cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON
+    make
+    make check
+    make install
+    source /usr/local/gromacs/bin/GMXRC
+    
     cd /opt/sw
     rm -rf xssp
+    rm -rf gromacs-2019.3*
     
     
