@@ -52,7 +52,7 @@ From: willgpaik/centos7_aci
     cd gromacs-2019.3
     mkdir build
     cd build
-    cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON
+    cmake3 .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON
     make
     make check
     make install
