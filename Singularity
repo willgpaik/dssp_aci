@@ -8,6 +8,7 @@ From: willgpaik/centos7_aci
 %environment 
     export PATH=$PATH:/opt/sw/dssp/bin
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+    source /usr/local/gromacs/bin/GMXRC
 
 %runscript
 
